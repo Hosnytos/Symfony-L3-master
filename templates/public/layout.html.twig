@@ -1,0 +1,67 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Bienvenue!{% endblock %}
+
+{% block layout %}
+
+    <div class="section first">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    {% for message in app.flashes('success') %}
+                        <div class="alert alert-success">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                    {% block body %}{% endblock %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Start Footer -->
+    <footer class="footer-box">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 white_fonts">
+                    <div class="row">
+                        <div class="col-sm-6 col-md-6 col-lg-3">
+                            <div class="full">
+                                <img class="img-responsive" src="{{ asset('images/footer_logo.png') }}" alt="#"/>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-6 col-lg-3">
+                            <div class="full">
+                                <h3>Liens rapides</h3>
+                            </div>
+                            <div class="full">
+                                <ul class="menu_footer">
+                                    <li><a href="{{ path('index') }}">> Accueil</a></li>
+                                    <li><a href="{{ path('offer_public') }}">> Offres</a></li>
+                                    <li><a href="{{ path('article_index') }}">> Articles</a></li>
+                                    <li><a href="{{ path('contact_new') }}">> Contact</a></li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-sm-6 col-md-6 col-lg-3">
+                            <div class="full">
+                                <div class="footer_blog full white_fonts">
+                                    <h3>Contactez-nous</h3>
+                                    <ul class="full">
+                                        <li><img src="images/i5.png"><span>Tours, 37200<br>France</span></li>
+                                        <li><img src="images/i6.png"><span>exchang@gmail.com</span></li>
+                                        <li><img src="images/i7.png"><span>+33725993647</span></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- End Footer -->
+
+  
+
+{% endblock %}

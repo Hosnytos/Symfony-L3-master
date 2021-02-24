@@ -1,0 +1,15 @@
+{% extends 'public/layout.html.twig' %}
+
+{% block title %}Ajouter un contact{% endblock %}
+
+{% block body %}
+    <div class="heading_main text_align_center">
+         <h2><span class="theme_color"></span>Contactez-nous</h2>
+    </div>
+
+    {{ include('contact/_form.html.twig') }}
+
+    {% if is_granted('ROLE_ADMIN') %}
+        <a href="{{ path('contact_index') }}">Retour</a>
+    {% endif %}
+{% endblock %}

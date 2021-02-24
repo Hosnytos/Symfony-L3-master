@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Espace administration{% endblock %}
+
+{% block logo %}
+    <a class="navbar-brand" href="{{ path('admin')}}">
+        <img src="{{asset('images/adminlogo.png')}}" style="height: 110px;" alt="image">
+    </a>
+{% endblock %}
+
+{% block header_links %}
+    <div class="site_information">
+        <ul>
+            <li><a class="join_bt" href="{{ path('index') }}">Voir le site</a></li>
+        </ul>
+    </div>
+{% endblock %}
+
+{% block navbar_links %}
+    {% if is_granted ('ROLE_ADMIN') %}
+        <li><a class="nav-link active" href="{{ path('article_indexadmin')}}">Articles</a></li>
+        <li><a class="nav-link active" href="{{ path('offer_index')}}">Offres</a></li>
+        <li><a class="nav-link active" href="{{ path('contact_index')}}">Demandes de contact</a></li>
+        <li><a class="nav-link active" href="{{ path('user_index')}}">Utilisateurs</a></li>
+        <li><a class="nav-link active" href="{{ path('user_compte', {'id': app.user.id}) }}">Mon Compte</a></li>
+    {% endif %}
+    {% if is_granted ('ROLE_ADMIN') == false %}
+        {% if is_granted ('ROLE_USER') %}
+            <li><a class="nav-link active" href="{{ path('user_compte', {'id': app.user.id}) }}">Mon Compte</a></li>
+            <li><a class="nav-link active" href="{{ path('souscription_index')}}">Mes souscriptions</a></li>
+        {% endif %}
+    {% endif %}
+{% endblock %}
+
+{% block layout %}
+
+    <!-- Start header -->
+    <div class="section first">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    {% block body %}{% endblock %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

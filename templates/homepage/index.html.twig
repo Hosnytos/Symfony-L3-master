@@ -1,0 +1,54 @@
+{% extends 'admin/layout.html.twig' %}
+
+{% block title %}Pages d'accueil{% endblock %}
+
+{% block body %}
+    <div class="section layout_padding padding_top_0">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="full">
+                        <div class="heading_main text_align_center">
+                            <h2><span class="theme_color"></span>Listes des pages d'accueil</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Titre</th>
+                <th>Description</th>
+                <th>À propos</th>
+                <th>Informations supplémentaires</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for homepage in homepages %}
+            <tr>
+                <td>{{ homepage.title }}</td>
+                <td>{{ homepage.body }}</td>
+                <td>{{ homepage.titleAbout }}</td>
+                <td>{{ homepage.textAbout }}</td>
+                <td>
+                    <a href="{{ path('homepage_show', {'id': homepage.id}) }}">Afficher</a>
+                    <a href="{{ path('homepage_edit', {'id': homepage.id}) }}">Modifier</a>
+                </td>
+            </tr>
+        
+        </tbody>
+    </table>
+
+    {% else %}
+        <p> Aucune page d'accueil trouvé </p>
+    {% endfor %}
+
+    <br>
+    <a class='btn btn-primary' href="{{ path('homepage_new') }}">Ajouter une page d'accueil</a>
+    <br>
+    <p></p>
+{% endblock %}

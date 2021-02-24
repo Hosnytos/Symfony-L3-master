@@ -1,0 +1,40 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Espace agent{% endblock %}
+
+{% block logo %}
+    <a class="navbar-brand" href="{{ path('souscription_index')}}">
+        <img src="{{asset('images/agentlogo.png')}}" style="height: 110px;" alt="image">
+    </a>
+{% endblock %}
+
+{% block header_links %}
+    <div class="site_information">
+        <ul>
+            <li><a class="join_bt" href="{{ path('index') }}">Voir le site</a></li>
+        </ul>
+    </div>
+{% endblock %}
+
+{% block navbar_links %}
+    <li><a class="nav-link active" href="{{ path('user_compte', {'id':app.user.id} )}}">Mon compte</a></li>
+    <li><a class="nav-link active" href="{{ path('user_souscriptions', {'id':app.user.id} ) }}">Mes souscriptions</a></li>
+    <li><a class="nav-link active" href="{{ path('souscription_index')}}">Gérer les souscriptions</a></li>
+    {% if is_granted ('ROLE_ADMIN') %}
+        <li><a class="nav-link" href="{{ path('admin') }}">Espace admin</a></li>
+    {% endif %}
+{% endblock %}
+
+{% block layout %}
+
+    <!-- Start header -->
+    <div class="section first">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    {% block body %}{% endblock %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

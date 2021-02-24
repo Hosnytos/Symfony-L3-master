@@ -1,0 +1,48 @@
+{% extends 'public/layout.html.twig' %}
+
+{% block title %} Offres - {{ offer.titre }} {% endblock %}
+
+{% block body %}
+
+
+    <h1> {{ offer.titre }} </h1>
+    <p> {{ offer.textintro}} </p>
+    <img class="img-responsive" src="{{ asset('uploads/images/'~ offer.imageOffre) }}" alt="#" width="450" height="280" />
+    <p> {{ offer.textoffre }} </p>
+    <p> Prix : <i>{{ offer.prix }}€ </i></p>
+    
+    <br>
+    <a href="{{ path('subscribe_to_offer', {'id': offer.id}) }}" class="btn btn-lg btn-success">Souscrire</a>    
+    <p></p>
+    <br>
+
+    {% if is_granted ('ROLE_AGENT') %}
+     
+        <a class ="btn btn-primary" href="{{ path('offer_edit', {'id': offer.id}) }}">Modifier</a>
+        <br>
+        <br>
+        {{ include('offer/_delete_form.html.twig') }}
+    {% endif %}
+
+    <div class="row">
+      {% for other_offer in offers %}
+        {% if other_offer.id is not same as(offer.id) %}
+            <div class="col-md-4 col-sm-6 col-xs-12">
+                                    <div class="full news_blog">
+                                        <img class="img-responsive" src="{{ asset('uploads/images/'~ other_offer.imageOffre) }}" alt="#" />
+                                        <div class="overlay">><a class="main_bt transparent" href="{{ path('offer_showpublic', { 'id' : other_offer.id }) }}">Voir</a></div>
+                                        <div class="container-fluid blog_details">
+                                            <h3>{{ other_offer.titre }}</h3>
+                                            <p> {{ other_offer.textintro }} </p>
+                                            <p> Prix :{{ offer.prix }}€ </p>
+                                        </div>
+                                    </div>
+                     </div>
+        {% endif %}
+        {% endfor %}
+    </div>
+
+    <br>
+    <p></p>
+    <a href="{{ path('offer_public') }}">Retour</a>
+{% endblock %}

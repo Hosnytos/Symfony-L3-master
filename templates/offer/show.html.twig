@@ -1,0 +1,56 @@
+{% extends 'admin/layout.html.twig' %}
+
+{% block title %}Offres - {{ offer.titre }}{% endblock %}
+
+{% block body %}
+    <div class="row">
+         <div class="col-md-12">
+                 <div class="full">
+                    <div class="heading_main text_align_center">
+                        <h2><span class="theme_color"></span>Offre - {{ offer.titre }}</h2>
+                    </div>
+                 </div>
+         </div>
+    </div>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ offer.id }}</td>
+            </tr>
+            <tr>
+                <th>Titre</th>
+                <td>{{ offer.titre }}</td>
+            </tr>
+            <tr>
+                <th>À propos</th>
+                <td>{{ offer.textintro }}</td>
+            </tr>
+            <tr>
+                <th>Description</th>
+                <td>{{ offer.textoffre }}</td>
+            </tr>
+            <tr>
+                <th>Prix</th>
+                <td>{{ offer.prix }}€</td>
+            </tr>
+            <tr>
+                <th>Abonnés</th>
+                <td>{{ offer.RelationSoOf|length }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <br>
+    <a class="btn btn-primary" href="{{ path('offer_edit', {'id': offer.id}) }}">Modifier</a>
+
+    <p></p>
+    <br>
+    {{ include('offer/_delete_form.html.twig') }}
+
+    <br>
+    <a href="{{ path('offer_index') }}">Retour</a>
+    <br>
+    <p></p>
+{% endblock %}

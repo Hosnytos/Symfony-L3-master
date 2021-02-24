@@ -1,0 +1,23 @@
+{% extends 'admin/layout.html.twig' %}
+
+{% block title %}Modifier un article{% endblock %}
+
+{% block body %}
+    <div class="row">
+         <div class="col-md-12">
+                 <div class="full">
+                    <div class="heading_main text_align_center">
+                        <h2><span class="theme_color"></span>Modification d'un article</h2>
+                    </div>
+                 </div>
+         </div>
+    </div>
+
+    {{ include('article/_form.html.twig', {'button_label': 'Valider'}) }}
+
+    <br>
+    {{ include('article/_delete_form.html.twig') }}
+
+    <br>
+    <a href="{{ path('article_index') }}">Annuler</a>
+{% endblock %}

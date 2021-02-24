@@ -1,0 +1,14 @@
+{% extends 'admin/layout.html.twig' %}
+
+{% block title %}Nouvel article{% endblock %}
+
+{% block body %}
+    <div class="heading_main text_align_center">
+        <h2><span class="theme_color"></span>Ajouter un nouvel article</h2>
+    </div>
+
+    {{ include('article/_form.html.twig') }}
+    
+
+    <a href="{{ path('article_index') }}">Annuler</a>
+{% endblock %}

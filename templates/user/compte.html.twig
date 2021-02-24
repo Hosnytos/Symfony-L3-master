@@ -1,0 +1,85 @@
+{% extends 'espace-client/layout.html.twig' %}
+
+{% block title %}Mon compte{% endblock %}
+
+{% block body %}
+        <div class="section layout_padding padding_top_0">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="full">
+                        <div class="heading_main text_align_center">
+                            <h2><span class="theme_color"></span>Mes informations</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Nom</th>
+                <td>{{ user.nom }}</td>
+            </tr>
+
+            <tr>
+                <th>Prénom</th>
+                <td>{{ user.prenom }}</td>
+            </tr>
+
+            <tr>
+                <th>Date de naissance</th>
+                <td>{{ user.datenaissance|date('d/m/Y') }}</td>
+            </tr>
+
+            <tr>
+                <th>Email</th>
+                <td>{{ user.email }}</td>
+            </tr>
+            <tr>
+                <th>Mot de Passe</th>
+                <td>{{ user.password }}</td>
+            </tr>
+
+            <tr>
+                <th>Civilité</th>
+                <td>{{ user.civilite }}</td>
+            </tr>
+
+
+
+            <tr>
+                <th>N° téléphone</th>
+                <td>{{ user.telephone }}</td>
+            </tr>
+
+            <tr>
+                <th>Ville</th>
+                <td>{{ user.ville }}</td>
+            </tr>
+
+            <tr>
+                <th>Code postal</th>
+                <td>{{ user.codepostal }}</td>
+            </tr>
+
+            <tr>
+                <th>Pays</th>
+                <td>{{ user.pays }}</td>
+            </tr>
+
+            <tr>
+                <th>N° de sécurité sociale</th>
+                <td>{{ user.numsecu }}</td>
+            </tr>
+
+
+        </tbody>
+    </table>
+
+    <a class ="btn btn-primary" href="{{ path('compte_edit', {'id': app.user.id}) }}">Modifier</a>
+    <br>
+
+{% endblock %}

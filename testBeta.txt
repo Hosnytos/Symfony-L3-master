@@ -1,0 +1,153 @@
+Ajouter propriété updImage dans Article entity
+/**
+     * @ORM\Column(type="string")
+     */
+    private $brochureFilename;
+
+    public function getBrochureFilename()
+    {
+        return $this->brochureFilename;
+    }
+
+    public function setBrochureFilename($brochureFilename)
+    {
+        $this->brochureFilename = $brochureFilename;
+
+        return $this;
+    }
+}
+
+
+ArticleType
+->add('brochure', FileType::class, [
+                'label' => 'Brochure (PDF file)',
+
+                // unmapped means that this field is not associated to any entity property
+                'mapped' => false,
+
+                // make it optional so you don't have to re-upload the PDF file
+                // every time you edit the Product details
+                'required' => false,
+
+                // unmapped fields can't define their validation using annotations
+                // in the associated entity, so you can use the PHP constraint classes
+                'constraints' => [
+                    new File([
+                        'maxSize' => '1024k',
+                        'mimeTypes' => [
+                            'application/pdf',
+                            'application/x-pdf',
+                        ],
+                        'mimeTypesMessage' => 'Please upload a valid PDF document',
+                    ])
+                ],
+            ])
+
+Article- New
+<h1>Adding a new product</h1>
+
+{{ form_start(form) }}
+    {# ... #}
+
+    {{ form_row(form.brochure) }}
+{{ form_end(form) }}
+
+Product controller
+/**
+     * @Route("/product/new", name="app_product_new")
+     */
+    public function new(Request $request, SluggerInterface $slugger)
+    {
+        $product = new Product();
+        $form = $this->createForm(ProductType::class, $product);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            /** @var UploadedFile $brochureFile */
+            $brochureFile = $form->get('brochure')->getData();
+
+            // this condition is needed because the 'brochure' field is not required
+            // so the PDF file must be processed only when a file is uploaded
+            if ($brochureFile) {
+                $originalFilename = pathinfo($brochureFile->getClientOriginalName(), PATHINFO_FILENAME);
+                // this is needed to safely include the file name as part of the URL
+                $safeFilename = $slugger->slug($originalFilename);
+                $newFilename = $safeFilename.'-'.uniqid().'.'.$brochureFile->guessExtension();
+
+                // Move the file to the directory where brochures are stored
+                try {
+                    $brochureFile->move(
+                        $this->getParameter('brochures_directory'),
+                        $newFilename
+                    );
+                } catch (FileException $e) {
+                    // ... handle exception if something happens during file upload
+                }
+
+                // updates the 'brochureFilename' property to store the PDF file name
+                // instead of its contents
+                $product->setBrochureFilename($newFilename);
+            }
+
+            // ... persist the $product variable or any other work
+
+            return $this->redirectToRoute('app_product_list');
+        }
+
+        return $this->render('product/new.html.twig', [
+            'form' => $form->createView(),
+        ]);
+    }
+}
+
+config/services.yaml
+ brochures_directory: '%kernel.project_dir%/public/uploads/brochures'
+
+Article show
+<a href="{{ asset('uploads/images/'~ article.imageArticle) }}">View brochure (PDF)</a>
+
+
+
+Modifier
+
+$product->setBrochureFilename( new File($this->getParameter('brochures_directory').'/'.$product->getBrochureFilename()) );
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+article new de base
+/**
+     * @Route("/new", name="article_new", methods={"GET","POST"})
+     */
+    public function new(Request $request): Response
+    {
+        $article = new Article();
+        $form = $this->createForm(ArticleType::class, $article);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $entityManager = $this->getDoctrine()->getManager();
+            $entityManager->persist($article);
+            $entityManager->flush();
+
+            return $this->redirectToRoute('article_index');
+        }
+
+        return $this->render('article/new.html.twig', [
+            'article' => $article,
+            'form' => $form->createView(),
+        ]);
+    }

@@ -1,0 +1,40 @@
+{% extends 'public/layout.html.twig' %}
+
+{% block title %} Articles - {{ article.title }} {% endblock %}
+
+{% block body %}
+
+
+    <h1> {{ article.title }} </h1>
+    <img class="img-responsive" src="{{ asset('uploads/images/'~ article.imageArticle) }}" alt="#" width="450" height="280" />
+    <p> Publié le <i>{{ article.created ? article.created|date('d-m-Y') : '' }} </i></p>
+    <p> {{ article.content }} </p>
+    
+    {% if is_granted ('ROLE_ADMIN') %}
+     
+        <a class ="btn btn-primary" href="{{ path('article_edit', {'id': article.id}) }}">Modifier</a>
+        <br>
+        <br>
+        {{ include('article/_delete_form.html.twig') }}
+    {% endif %}
+
+    <div class="row">
+      {% for other_article in articles %}
+        {% if other_article.id is not same as(article.id) %}
+            <div class="col-md-4 col-sm-6 col-xs-12">
+                                    <div class="full news_blog">
+                                        <img class="img-responsive" src="{{ asset('uploads/images/'~ other_article.imageArticle) }}" alt="#" />
+                                        <div class="overlay">><a class="main_bt transparent" href="{{ path('article_show', { 'id' : other_article.id }) }}">Voir</a></div>
+                                        <div class="blog_details">
+                                            <h3>{{ other_article.title }}</h3>
+                                            <p> {{ other_article.content }} </p>
+                                        </div>
+                                    </div>
+                     </div>
+        {% endif %}
+        {% endfor %}
+    </div>
+
+
+    <a href="{{ path('article_index') }}">Retour</a>
+{% endblock %}

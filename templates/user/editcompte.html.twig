@@ -1,0 +1,22 @@
+{% extends 'admin/layout.html.twig' %}
+
+{% block title %}Utilisateur - {{ user.email }} {% endblock %}
+
+{% block body %}
+    <div class="row">
+         <div class="col-md-12">
+                 <div class="full">
+                    <div class="heading_main text_align_center">
+                        <h2><span class="theme_color"></span>Modifier mes informations</h2>
+                    </div>
+                 </div>
+         </div>
+    </div>
+
+    <br>
+    {{ include('user/_form.html.twig', {'button_label': 'Valider'}) }}
+
+    <br>
+    <a href="{{ path('user_compte', {'id': app.user.id}) }}">Annuler</a>
+
+{% endblock %}

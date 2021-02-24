@@ -1,0 +1,11 @@
+{% extends 'espace-agent/layout.html.twig' %}
+
+{% block title %}Nouvelle Souscription{% endblock %}
+
+{% block body %}
+    <h1>Ajouter une nouvelle souscription</h1>
+
+    {{ include('souscription/_form.html.twig') }}
+
+    <a href="{{ path('souscription_index') }}">Retour</a>
+{% endblock %}

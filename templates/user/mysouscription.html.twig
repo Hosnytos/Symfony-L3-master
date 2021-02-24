@@ -1,0 +1,40 @@
+{% extends 'espace-client/layout.html.twig' %}
+
+{% block title %}Mes souscriptions{% endblock %}
+
+{% block body %}
+    <div class="section layout_padding padding_top_0">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="full">
+                        <div class="heading_main text_align_center">
+                            <h2><span class="theme_color"></span>Mes souscriptions</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Offres</th>
+                <th>État</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for souscription in user %}
+            <tr>
+                <td> {{ souscription.relation.titre }} </td>
+                <td>{{ souscription.etat }}</td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="3">Aucune souscription n'a été trouvé</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+{% endblock %}
